@@ -10,7 +10,13 @@ const Header = () => {
     <div className="nav">
       <div className="logo">
         <Link className="nav-link" to="/">
-          <Icon />
+          <Icon
+            style={{
+              width: "50px",
+              height: "50px",
+              flex: "0 0 auto",
+            }}
+          />
         </Link>
       </div>
       <div className="nav-links">

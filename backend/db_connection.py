@@ -1,5 +1,8 @@
 import pymongo
+from dotenv import load_dotenv
+import os
 
-url = "mongodb+srv://adi:root@user-data.wbw7fev.mongodb.net/Notes"
+load_dotenv(".env")
+url = os.getenv("DATABASE_URL")
 client = pymongo.MongoClient(url)
 db = client["Transcribe"]
