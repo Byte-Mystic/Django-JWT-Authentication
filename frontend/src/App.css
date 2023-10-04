@@ -21,9 +21,10 @@ html, body{
 .nav-links{
   display: flex;
 }
+
 .logo, .nav-item{
   margin: 2em;
-  font-weight: 400;
+  font-weight: 100;
   font-size: 1.5vw;
 }
 
@@ -62,6 +63,7 @@ h1 {
   line-height: 1;
   text-transform: uppercase;
 }
+
 a{
   text-decoration: none;
   font-weight: 500;
@@ -119,20 +121,22 @@ form input[type="password"] {
   border: none;
   border-radius: 4px;
 }
+
 form input[type="text"]:focus ,
 form input[type="email"]:focus ,
 form input[type="password"]:focus {
   color: var(--color-dark);
   outline: none;
 }
+
 .login-button {
   background-color: var(--color-main);
   font-weight: 500;
-  font-size: 14px; /* Increased font size */
+  font-size: 14px;
   color: var(--color-dark);
   border: none;
   border-radius: 10px;
-  padding: 20px 30px; /* Increased padding */
+  padding: 20px 30px;
   margin: 4px auto;
   display: block;
 }

@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import Header from "./components/Header";
-import Notes from "./pages/Notes";
+import Notes from "./pages/NotesListPage";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AnimatePresence } from "framer-motion";
 

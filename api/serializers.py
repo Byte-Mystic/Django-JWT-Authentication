@@ -8,6 +8,7 @@ from rest_framework.serializers import (
     ValidationError,
 )
 from .models import User, Note
+from backend.db_connection import db
 
 
 class NoteSerializer(ModelSerializer):
@@ -51,4 +52,12 @@ class RegisterSerializer(ModelSerializer):
 
         user.set_password(validated_data["password"])
         user.save()
+        print(type(validated_data["email"]))
+        try:
+            data = {"email": validated_data["email"]}
+            db["users"].insert_one(data)
+            print(f"{data} is saved to MongoDB Successfully.")
+        except Exception as e:
+            print(e)
+
         return user

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import AuthContext from "../context/AuthContext";
+import { ReactComponent as Icon } from "../assets/dev.svg";
 
 const Header = () => {
   let { user, logoutUser } = useContext(AuthContext);
@@ -9,7 +10,7 @@ const Header = () => {
     <div className="nav">
       <div className="logo">
         <Link className="nav-link" to="/">
-          Aditya
+          <Icon />
         </Link>
       </div>
       <div className="nav-links">

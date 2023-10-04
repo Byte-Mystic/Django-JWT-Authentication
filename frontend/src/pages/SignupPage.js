@@ -22,7 +22,7 @@ const SignupPage = () => {
           className="login-button"
           onClick={() => signupUser}
         >
-          Login
+          Sign Up
         </motion.button>
       </form>
     </div>
