@@ -1,14 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import AuthContext from "../context/AuthContext";
+import React from "react";
 import "./HomePage.css";
+import transition from "../transition";
 
 const HomePage = () => {
-  return (
-    <div className="todo-list-container">
-      <h2>Welcome To Home Page!</h2>
-    </div>
-  );
+  return <h1>Welcome To Home Page!</h1>;
 };
 
-export default HomePage;
+export default transition(HomePage);

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import AuthContext from "../context/AuthContext";
-import "./HomePage.css";
+import transition from "../transition";
+//import "./HomePage.css";
 
 const Notes = () => {
   let [notes, setNotes] = useState([]);
@@ -39,4 +39,4 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default transition(Notes);

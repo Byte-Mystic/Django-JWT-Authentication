@@ -1,17 +1,26 @@
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
+import transition from "../transition";
+import { motion } from "framer-motion";
 
 const LoginPage = () => {
   let { loginUser } = useContext(AuthContext);
   return (
-    <div>
+    <div className="loginBox">
       <form onSubmit={loginUser}>
         <input type="text" name="username" placeholder="Enter Your Username" />
         <input type="password" name="password" placeholder="Enter Password" />
-        <input type="submit" value="Login" />
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="login-button"
+          onClick={() => loginUser}
+        >
+          Login
+        </motion.button>
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default transition(LoginPage);
