@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import transition from "../transition";
+import AddButton from "../components/AddButton";
 import "./Notes.css";
+
 const Notes = () => {
   let [notes, setNotes] = useState([]);
   let { authTokens, logoutUser } = useContext(AuthContext);
@@ -24,16 +26,16 @@ const Notes = () => {
       logoutUser();
     }
   };
+
   return (
     <div className="todo-list-container">
       <h2>Welcome To Your Notes!</h2>
-      <div className="notes-container">
-        <ul className="todo-list">
-          {notes.map((note) => (
-            <li key={note.id}>{note.body}</li>
-          ))}
-        </ul>
-      </div>
+      <ul className="todo-list">
+        {notes.map((note) => (
+          <li key={note.id}>{note.body}</li>
+        ))}
+      </ul>
+      <AddButton />
     </div>
   );
 };
