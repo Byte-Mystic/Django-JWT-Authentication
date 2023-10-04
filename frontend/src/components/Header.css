@@ -1,0 +1,39 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-dark); /* Use your desired background color */
+  padding: 10px 0;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+}
+
+.header-container {
+  width: 100%;
+  max-width: 1200px; /* Set a maximum width for the content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* Add some horizontal spacing */
+}
+
+.nav-links {
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--color-white);
+  text-decoration: none;
+  margin-right: 20px; /* Adjust margin for spacing between links */
+  font-weight: bold;
+}
+
+.user-welcome {
+  color: var(--color-main);
+  font-weight: bold;
+}
