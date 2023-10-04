@@ -88,6 +88,7 @@ a{
 }
 
 .loginBox{
+  transform: translate(-50%, -50%);
   width: 25%;
   position: absolute;
   text-align: center;
@@ -97,6 +98,7 @@ a{
 }
 
 .signupBox{
+  transform: translate(-50%, -50%);
   width: 25%;
   position: absolute;
   text-align: center;

@@ -1,5 +1,4 @@
 import React from "react";
-import "./HomePage.css";
 import transition from "../transition";
 
 const HomePage = () => {

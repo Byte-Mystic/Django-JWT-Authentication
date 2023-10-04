@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import transition from "../transition";
-//import "./HomePage.css";
-
+import "./Notes.css";
 const Notes = () => {
   let [notes, setNotes] = useState([]);
   let { authTokens, logoutUser } = useContext(AuthContext);
