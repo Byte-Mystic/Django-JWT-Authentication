@@ -6,6 +6,7 @@ import {
   SignupPage,
   NotePage,
   NotesListPage,
+  VoicePage,
 } from "./pages";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AnimatePresence } from "framer-motion";
@@ -32,6 +33,14 @@ function App() {
             element={
               <PrivateRoute>
                 <NotePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/voices"
+            element={
+              <PrivateRoute>
+                <VoicePage />
               </PrivateRoute>
             }
           />

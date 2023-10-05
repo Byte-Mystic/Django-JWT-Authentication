@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
 from backend.db_connection import db
 import datetime
+import gridfs
 from bson import json_util, ObjectId
 
 
@@ -83,9 +84,22 @@ class NoteDetailView(APIView):
             )
 
 
+class VoiceView(APIView):
+    NOTES = db["voice"]
+
+    @permission_classes([IsAuthenticated])
+    def get(self, request):
+        ...
+
+    def post(self, request):
+        ...
+
+
 @api_view(["GET"])
 def getRoutes(request):
     routes = [
+        "/api/voice",
+        "/api/voice-process",
         "/api/notes",
         "/api/register",
         "/api/token",
