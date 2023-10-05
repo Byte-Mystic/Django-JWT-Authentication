@@ -3,28 +3,30 @@ import AuthContext from "../context/AuthContext";
 import transition from "../transition";
 import { AddButton, ListItem } from "../components";
 import "./Notes.css";
+import useAxios from "../utils/useAxios";
 
 const NotesListPage = () => {
+  let [loading, setLoading] = useState(true);
   let [notes, setNotes] = useState([]);
   let { authTokens, logoutUser } = useContext(AuthContext);
+  let api = useAxios();
+
   useEffect(() => {
     getNotes();
   }, []);
 
-  let getNotes = async () => {
-    let response = await fetch("/api/notes/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-    });
-    let data = await response.json();
-    if (response.status === 200) {
-      let parsedData = data.map((item) => JSON.parse(item));
-      setNotes(parsedData);
-    } else if (response.statusText === "Unauthorized") {
-      logoutUser();
+  const getNotes = async () => {
+    try {
+      let response = await api.get(`/api/notes/`);
+
+      if (response.status === 200) {
+        let parsedData = response.data.map((item) => JSON.parse(item));
+        setNotes(parsedData);
+      }
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -34,11 +36,18 @@ const NotesListPage = () => {
         <h2 className="notes-title">&#9782; Notes</h2>
         <p className="notes-count">{notes.length}</p>
       </div>
-      <div className="notes-list">
-        {notes.map((note, index) => (
-          <ListItem key={index} note={note} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="loading-screen">
+          {/* Loading SCREEn */}
+          Loading...
+        </div>
+      ) : (
+        <div className="notes-list">
+          {notes.map((note, index) => (
+            <ListItem key={index} note={note} />
+          ))}
+        </div>
+      )}
       <AddButton />
     </div>
   );

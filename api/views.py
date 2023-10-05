@@ -20,15 +20,6 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
-# def getNotes(request):
-#     user = request.user
-#     notes = user.note_set.all()
-#     serializer = NoteSerializer(notes, many=True)
-#     return Response(serializer.data, status=status.HTTP_200_OK)
-
-
 class NotesListView(APIView):
     NOTES = db["notes"]
 
@@ -44,6 +35,7 @@ class NotesListView(APIView):
         note_data = json_parser.parse(request)
         note_data["created"] = datetime.datetime.now(tz=datetime.timezone.utc)
         note_data["updated"] = datetime.datetime.now(tz=datetime.timezone.utc)
+        note_data["email"] = request.user.email
         inserted_note = self.NOTES.insert_one(note_data)
         response_data = {
             "message": "Note created successfully",

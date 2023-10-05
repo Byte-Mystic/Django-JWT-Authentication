@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 import AuthContext from "../context/AuthContext";
+import useAxios from "../utils/useAxios";
 
 const NotePage = () => {
   let { authTokens, logoutUser } = useContext(AuthContext);
+  let api = useAxios();
   const { id } = useParams();
   const navigate = useNavigate();
   let [note, setNote] = useState(null);
-  console.log("NOTE", note);
 
   useEffect(() => {
     getNote();
@@ -16,38 +17,28 @@ const NotePage = () => {
 
   let getNote = async () => {
     if (id === "new") return;
-    let res = await fetch(`http://127.0.0.1:8000/api/notes/${id}`);
-    let data = await res.json();
-    setNote(JSON.parse(data));
+    let response = await api.get(`/api/notes/${id}`);
+    setNote(JSON.parse(response.data));
   };
 
   let createNote = async () => {
-    fetch("http://127.0.0.1:8000/api/notes/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-      body: JSON.stringify(note),
-    });
+    try {
+      let response = await api.post(`/api/notes/`, note);
+    } catch (err) {
+      console.log("error in creating note: ", err);
+    }
   };
+
   let updateNote = async () => {
-    fetch(`http:127.0.0.1:8000/api/notes/${id}/`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(note),
-    });
+    try {
+      let response = await api.put(`/api/notes/${id}`, note);
+    } catch (err) {
+      console.log("Error in Updating Note: ", err);
+    }
   };
 
   let deleteNote = async () => {
-    let res = await fetch(`http:127.0.0.1:8000/api/notes/${id}/`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    let response = await api.delete(`/api/notes/${id}`);
     navigate("/notes");
   };
 

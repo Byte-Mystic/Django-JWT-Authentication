@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       return;
     }
     try {
-      let response = await fetch("http://127.0.0.1:8000/api/register/", {
+      let response = await fetch("/api/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 
   let loginUser = async (e) => {
     e.preventDefault();
-    let response = await fetch("http://127.0.0.1:8000/api/token/", {
+    let response = await fetch("/api/token/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,47 +90,21 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
-  let updateToken = async () => {
-    let response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        refresh: authTokens?.refresh,
-      }),
-    });
-
-    let data = await response.json();
-    if (response.status === 200) {
-      setAuthTokens(data);
-      setUser(jwt_decode(data.access));
-      localStorage.setItem("authTokens", JSON.stringify(data));
-    } else {
-      logoutUser();
-    }
-    setloading(false);
-  };
-
   let contextData = {
     user: user,
     authTokens: authTokens,
+    setAuthTokens: setAuthTokens,
+    setUser: setUser,
     loginUser: loginUser,
     logoutUser: logoutUser,
     signupUser: signupUser,
   };
 
   useEffect(() => {
-    if (loading) {
-      updateToken();
+    if (authTokens) {
+      setUser(jwt_decode(authTokens.access));
     }
-    let fourMinutes = 1000 * 60 * 4;
-    let interval = setInterval(() => {
-      if (authTokens) {
-        updateToken();
-      }
-    }, fourMinutes);
-    return () => clearInterval(interval);
+    setloading(false);
   }, [authTokens, loading]);
 
   return (
