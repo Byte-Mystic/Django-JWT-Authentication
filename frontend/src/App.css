@@ -1,17 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
 
 *{
   margin: 0;
   padding: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
   box-sizing: border-box;
-  color: #0f0f0f;
 }
+
 html, body{
-  font-family: "Roslindale Display Condensed";
   background: #c6d5c6;
 }
 
-.nav{
+/* .nav{
   position: fixed;
   width: 100%;
   display: flex;
@@ -26,7 +27,7 @@ html, body{
   margin: 2em;
   font-weight: 100;
   font-size: 1.5vw;
-}
+} */
 
 :root {
   --color-main: #f68657;
