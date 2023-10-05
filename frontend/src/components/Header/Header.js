@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
-import AuthContext from "../context/AuthContext";
-import { ReactComponent as Icon } from "../assets/dev.svg";
+import AuthContext from "../../context/AuthContext";
+import { ReactComponent as Icon } from "../../assets/dev.svg";
 
 const Header = () => {
   let { user, logoutUser } = useContext(AuthContext);

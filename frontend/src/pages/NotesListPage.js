@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import transition from "../transition";
-import AddButton from "../components/AddButton";
+import { AddButton, ListItem } from "../components";
 import "./Notes.css";
-import ListItem from "../components/ListItem";
 
 const NotesListPage = () => {
   let [notes, setNotes] = useState([]);
@@ -13,7 +12,7 @@ const NotesListPage = () => {
   }, []);
 
   let getNotes = async () => {
-    let response = await fetch("http://localhost:8000/api/notes/", {
+    let response = await fetch("/api/notes/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

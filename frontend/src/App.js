@@ -1,13 +1,15 @@
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import Header from "./components/Header";
-import NotesListPage from "./pages/NotesListPage";
-import NotePage from "./pages/NotePage";
+import {
+  HomePage,
+  LoginPage,
+  SignupPage,
+  NotePage,
+  NotesListPage,
+} from "./pages";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AnimatePresence } from "framer-motion";
+import { Header } from "./components";
 
 function App() {
   const location = useLocation();
