@@ -4,7 +4,8 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import Header from "./components/Header";
-import Notes from "./pages/NotesListPage";
+import NotesListPage from "./pages/NotesListPage";
+import NotePage from "./pages/NotePage";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AnimatePresence } from "framer-motion";
 
@@ -20,7 +21,15 @@ function App() {
             path="/notes"
             element={
               <PrivateRoute>
-                <Notes />
+                <NotesListPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/note/:id"
+            element={
+              <PrivateRoute>
+                <NotePage />
               </PrivateRoute>
             }
           />

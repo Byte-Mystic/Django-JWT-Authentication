@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 import AuthContext from "../context/AuthContext";
@@ -8,10 +8,15 @@ const NotePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   let [note, setNote] = useState(null);
+  console.log("NOTE", note);
+
+  useEffect(() => {
+    getNote();
+  }, [id]);
 
   let getNote = async () => {
-    if (id == "new") return;
-    let res = await fetch(`/api/notes/${id}`);
+    if (id === "new") return;
+    let res = await fetch(`http://127.0.0.1:8000/api/notes/${id}`);
     let data = await res.json();
     setNote(JSON.parse(data));
   };
@@ -27,7 +32,7 @@ const NotePage = () => {
     });
   };
   let updateNote = async () => {
-    fetch(`/api/notes/${id}/`, {
+    fetch(`http:127.0.0.1:8000/api/notes/${id}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -37,13 +42,13 @@ const NotePage = () => {
   };
 
   let deleteNote = async () => {
-    let res = await fetch(`/api/notes/${id}/`, {
+    let res = await fetch(`http:127.0.0.1:8000/api/notes/${id}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    navigate("/");
+    navigate("/notes");
   };
 
   let handleSubmit = () => {

@@ -55,6 +55,7 @@ class NotesListView(APIView):
 class NoteDetailView(APIView):
     NOTES = db["notes"]
 
+    @permission_classes([IsAuthenticated])
     def get(self, request, pk):
         note = self.NOTES.find_one({"_id": ObjectId(pk)})
         if note:
