@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import NoteSerializer, RegisterSerializer
+from .serializers import RegisterSerializer
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework import generics
@@ -11,8 +11,81 @@ from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
 from backend.db_connection import db
 import datetime
-import gridfs
 from bson import json_util, ObjectId
+import requests
+from django.test import RequestFactory
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from .serializers import MyTokenObtainPairSerializer
+import json
+
+
+class GoogleLoginCallbackView(APIView):
+    def post(self, request, *args, **kwargs):
+        code = request.data.get("code")
+        if code:
+            access_token = self.exchange_code_for_token(code)
+            if access_token:
+                google_user_info = self.get_google_user_info(access_token)
+                user = self.create_user_from_google_info(google_user_info)
+
+                token_serializer = MyTokenObtainPairSerializer()
+                refresh_token = token_serializer.get_token(user)
+
+                payload = {"refresh": str(refresh_token)}
+                response = requests.post(
+                    "http://127.0.0.1:8000/api/token/refresh/", json=payload
+                )
+                if response.status_code == 200:
+                    response_json = response.json()
+                    refresh_token = response_json["refresh"]
+                    access_token = response_json["access"]
+
+                    token = {
+                        "refresh": str(refresh_token),
+                        "access": str(access_token),
+                    }
+                return JsonResponse({"user": google_user_info, "token": token})
+        return JsonResponse({"error": "Invalid code"}, status=400)
+
+    def exchange_code_for_token(self, code):
+        token_endpoint = "https://oauth2.googleapis.com/token"
+        client_id = (
+            "534552463083-bu6k1l16c9tbjh6u71eture9lkojt5ni.apps.googleusercontent.com"
+        )
+        client_secret = "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"
+        redirect_uri = "http://localhost:3000/v1/users/login/google/callback/"
+
+        data = {
+            "code": code,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "redirect_uri": redirect_uri,
+            "grant_type": "authorization_code",
+        }
+
+        response = requests.post(token_endpoint, data=data)
+        token_data = response.json()
+        access_token = token_data.get("access_token")
+        return access_token
+
+    def create_user_from_google_info(self, google_user_info):
+        email = google_user_info.get("email")
+        username = google_user_info.get("name", email.split("@")[0])
+
+        user, created = User.objects.get_or_create(
+            email=email,
+            defaults={"username": username},
+        )
+        return user
+
+    def get_google_user_info(self, access_token):
+        userinfo_endpoint = "https://www.googleapis.com/oauth2/v3/userinfo"
+        headers = {"Authorization": f"Bearer {access_token}"}
+
+        response = requests.get(userinfo_endpoint, headers=headers)
+        user_info = response.json()
+        return user_info
 
 
 class RegisterView(generics.CreateAPIView):

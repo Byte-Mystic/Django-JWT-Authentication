@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import { IoSaveSharp } from "react-icons/io5";
+import { FaTrashAlt } from "react-icons/fa";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 import AuthContext from "../context/AuthContext";
@@ -13,7 +15,7 @@ const NotePage = () => {
 
   useEffect(() => {
     getNote();
-  }, [id]);
+  }, []);
 
   let getNote = async () => {
     if (id === "new") return;
@@ -25,7 +27,7 @@ const NotePage = () => {
     try {
       let response = await api.post(`/api/notes/`, note);
     } catch (err) {
-      console.log("error in creating note: ", err);
+      console.error("error in creating note: ", err);
     }
   };
 
@@ -33,7 +35,7 @@ const NotePage = () => {
     try {
       let response = await api.put(`/api/notes/${id}`, note);
     } catch (err) {
-      console.log("Error in Updating Note: ", err);
+      console.error("Error in Updating Note: ", err);
     }
   };
 
@@ -53,6 +55,7 @@ const NotePage = () => {
     }
     navigate("/notes");
   };
+
   let handleChange = (value) => {
     setNote({ ...note, body: value });
     console.log("Handle Change:", note);
@@ -65,9 +68,13 @@ const NotePage = () => {
           <ArrowLeft onClick={handleSubmit} />
         </h3>
         {id !== "new" ? (
-          <button onClick={deleteNote}>Delete</button>
+          <button onClick={deleteNote}>
+            <FaTrashAlt />
+          </button>
         ) : (
-          <button onClick={handleSubmit}>Done</button>
+          <button onClick={handleSubmit}>
+            <IoSaveSharp />
+          </button>
         )}
       </div>
       <textarea

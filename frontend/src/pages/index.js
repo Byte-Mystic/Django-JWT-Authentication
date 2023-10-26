@@ -4,3 +4,4 @@ export { default as NotePage } from "./NotePage";
 export { default as NotesListPage } from "./NotesListPage";
 export { default as SignupPage } from "./SignupPage";
 export { default as VoicePage } from "./VoicePage";
+export { default as GoogleCallback } from "./GoogleCallback";

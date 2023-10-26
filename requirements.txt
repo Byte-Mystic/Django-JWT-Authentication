@@ -36,3 +36,4 @@ sqlparse==0.4.4
 typing_extensions==4.8.0
 urllib3==2.0.6
 wrapt==1.15.0
+djang-allauth==0.54.0

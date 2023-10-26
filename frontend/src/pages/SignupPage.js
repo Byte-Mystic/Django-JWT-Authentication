@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import transition from "../transition";
 import { motion } from "framer-motion";
+import GoogleLoginCallback from "../components/GoogleLoginCallback/GoogleLoginCallback";
 
 const SignupPage = () => {
   let { signupUser } = useContext(AuthContext);
@@ -25,6 +26,7 @@ const SignupPage = () => {
           Sign Up
         </motion.button>
       </form>
+      <GoogleLoginCallback />
     </div>
   );
 };

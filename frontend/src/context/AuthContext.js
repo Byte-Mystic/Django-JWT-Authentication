@@ -8,16 +8,19 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+
   let [authTokens, setAuthTokens] = useState(() =>
     localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))
       : null
   );
+
   let [user, setUser] = useState(() =>
     localStorage.getItem("authTokens")
       ? jwt_decode(localStorage.getItem("authTokens"))
       : null
   );
+
   let [loading, setloading] = useState(true);
 
   let signupUser = async (e) => {

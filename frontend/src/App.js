@@ -7,6 +7,7 @@ import {
   NotePage,
   NotesListPage,
   VoicePage,
+  GoogleCallback,
 } from "./pages";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AnimatePresence } from "framer-motion";
@@ -46,6 +47,10 @@ function App() {
           />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<SignupPage />} />
+          <Route
+            path="/v1/users/login/google/callback/"
+            element={<GoogleCallback />}
+          />
         </Routes>
       </AnimatePresence>
     </>

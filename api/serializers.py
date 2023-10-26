@@ -7,14 +7,8 @@ from rest_framework.serializers import (
     EmailField,
     ValidationError,
 )
-from .models import User, Note
+from django.contrib.auth.models import User
 from backend.db_connection import db
-
-
-class NoteSerializer(ModelSerializer):
-    class Meta:
-        model = Note
-        fields = "__all__"
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -22,7 +16,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        token["username"] = user.username
+        token["identity"] = (
+            user.name if hasattr(user, "name") and user.name else user.username
+        )
         token["email"] = user.email
 
         return token

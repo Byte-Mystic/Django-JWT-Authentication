@@ -17,7 +17,7 @@ const useAxios = () => {
   axiosInstance.interceptors.request.use(async (req) => {
     const user = jwt_decode(authTokens.access);
     const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
-
+    console.log("Current Access Token is Expired:", isExpired);
     if (!isExpired) return req;
 
     const response = await axios.post(`${baseURL}/api/token/refresh/`, {
@@ -30,6 +30,20 @@ const useAxios = () => {
     req.headers.Authorization = `Bearer ${response.data.access}`;
     return req;
   });
+  axiosInstance.interceptors.response.use(
+    (response) => {
+      if (response.status === 401) {
+        alert("You are not authorized");
+      }
+      return response;
+    },
+    (error) => {
+      if (error.response && error.response.data) {
+        return Promise.reject(error.response.data);
+      }
+      return Promise.reject(error.message);
+    }
+  );
 
   return axiosInstance;
 };

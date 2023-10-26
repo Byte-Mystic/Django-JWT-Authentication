@@ -18,7 +18,7 @@ const NotesListPage = () => {
   const getNotes = async () => {
     try {
       let response = await api.get(`/api/notes/`);
-
+      console.log(response);
       if (response.status === 200) {
         let parsedData = response.data.map((item) => JSON.parse(item));
         setNotes(parsedData);

@@ -24,7 +24,7 @@ const Header = () => {
           <>
             <div className="nav-item">
               <Link to="/" className="nav-link">
-                Home
+                Home, Welcome {user.identity}
               </Link>
             </div>
             <div className="nav-item">

@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path("", views.getRoutes, name="routes"),
+    path("auth/google/", views.GoogleLoginCallbackView.as_view(), name="google_login"),
     path("notes/", views.NotesListView.as_view(), name="notes_view"),
     path("notes/<str:pk>", views.NoteDetailView.as_view(), name="note-details-view"),
     path("voice", views.VoiceView.as_view(), name="voice"),
